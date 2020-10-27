@@ -1,0 +1,157 @@
+#ExaminaciÃ³n de la unidad 1, inserta el cÃ³digo para
+#activar lo que se te indica. Guarda tu script y envÃ­alo
+#por classroom antes del martes.
+#Importante: En caso de detectar plagio, se te anularÃ¡
+#el apartado correspondiente.
+
+
+#Vas a trabajar con la matriz de datos
+#"millas" que se te proporciona a continuaciÃ³n.
+
+millas<-datos::millas
+
+#Realizar los siguientes pasos:
+
+
+#1.- Explora la matriz de datos millas 
+#valor: 5 puntos por comando correcto.
+
+#Visualizar el nombre de las variables dentro de la matriz
+names(millas)
+
+#Dimension de la matriz, cuantos observaciones y variables contiene
+dim(millas)
+
+#tipo de variable 
+str(millas)
+
+#Saber si hay valores perdidos
+anyNA(millas)
+
+#Que tipo de matriz de datos es
+typeof(millas)
+View(millas)
+
+#Convertir la matriz de datos a data frame
+millas_1<-as.data.frame(millas)
+
+#2.- Determina las medidas estadisticas descriptivas
+#y de variablidad
+#Importante: no calcules los errores.
+#Valor: 5 puntos por comando correcto.
+
+#Iniciaremos calculuando los datos descrip
+summary(millas_1)
+
+#para calcular la moda primero tenemos que instalar el paquete modeest y abrir la libreria
+install.packages("modeest")
+library(modeest)
+
+#la función que utilizaremos para identificar la moda es mfv()
+mfv(millas_1$fabricante)
+mfv(millas_1$modelo)
+mfv(millas_1$cilindrada)
+mfv(millas_1$anio)
+mfv(millas_1$cilindros)
+mfv(millas_1$transmision)
+mfv(millas_1$traccion)
+mfv(millas_1$ciudad)
+mfv(millas_1$autopista)
+mfv(millas_1$combustible)
+mfv(millas_1$clase)
+
+#calcular la varianza de cada una de las variables cuanti
+var(millas_1$fabricante)
+var(millas_1$modelo)
+var(millas_1$cilindrada)
+var(millas_1$anio)
+var(millas_1$cilindros)
+var(millas_1$transmision)
+var(millas_1$traccion)
+var(millas_1$ciudad)
+var(millas_1$autopista)
+var(millas_1$combustible)
+var(millas_1$clase)
+
+#calcular la desviacion standar para cada una de las variables cuantit
+sd(millas_1$fabricante)
+sd(millas_1$modelo)
+sd(millas_1$cilindrada)
+sd(millas_1$anio)
+sd(millas_1$cilindros)
+sd(millas_1$transmision)
+sd(millas_1$traccion)
+sd(millas_1$ciudad)
+sd(millas_1$autopista)
+sd(millas_1$combustible)
+sd(millas_1$clase)
+
+#coeficiente de variacion- instalar el paquete FinCal y abrir la librería
+install.packages("FinCal")
+library(FinCal)
+
+#Calcular el coeficiente de la variacion
+coefficient.variation(sd=sd(millas_1$anio),
+                      avg=mean(millas_1$anio))
+coefficient.variation(sd=sd(millas_1$cilindrada),
+                      avg=mean(millas_1$cilindrada))
+
+#3.- Construye:
+
+#A) Un grafico de dispersion con las variables cilindrada y autopista
+    #el color lo indica la variable clase. 
+    #Valor Total: 20 puntos
+    #(10 puntos por comando activado correcto).
+    #(10 punto por la generaciÃ³n del grafico).
+
+#Instalar el paquete tidyverse y abrir la libreria
+install.packages("tidyverse")
+install.packages("RColorBrewer")
+
+#Abrir las librerias
+library(tidyverse)
+library(RColorBrewer)
+
+#Tabla de dispersion
+dispersion_1<-ggplot(millas_1, aes(x=cilindrada, y=autopista, color=clase))+
+    geom_point()
+#Visualizar el grafico
+geom_point()
+dispersion_1
+
+#B) Un grafico boxplot con las variables transmision y ciudad
+    #El color lo indica la variable transmisiÃ³n    
+    #El titulo del grafico es Transmision de autos en ciudad
+    #Coloca la etiqueta "Transmision" en el eje x 
+    #Coloca la etiqueta "Ciudad" en el eje y 
+    #Valor Total: 20 puntos
+    #(10 puntos por comando activado correcto).
+    #(10 punto por la generacion del grafico del grafico).
+
+#Grafico boxplot
+boxplot<-ggplot(millas_1,aes(factor(transmision), ciudad, fill=transmision))+
+    geom_boxplot()+
+    ggtitle("Transmision de autos en ciudad")+
+    xlab("Transmision")+
+    ylab("Ciudad")
+
+#Visualizar boxplot
+boxplot
+
+#C) Un grafico de barras para la variable "cilindros" 
+    #Valor Total: 20 puntos
+    #(10 puntos por comando activado correcto).
+    #(10 punto por la generaciÃ³n del grafico).
+#Grafica de barras
+#Grafico de Barras
+
+#Construcción
+attach(millas_1)
+tabla_cilindros<-table(millas_1$cilindros)
+#visualizar la variable x que contiene la columna de cilindros
+tabla_cilindros
+#Especificar la paleta de colores que voy a utilizar
+color=c("coral","cyan4","darkgoldenrod1","darkseagreen")
+#Construir el grafico
+barplot(tabla_cilindros,xlab="cilindros", ylab="frecuencias", 
+        main="Gráfico de barras Cilindros", col=color)
